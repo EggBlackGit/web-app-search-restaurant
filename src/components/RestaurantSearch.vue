@@ -49,9 +49,12 @@ const toggleShow = (id) => {
       </div>
     </div>
 
-    <div class="d-flex justify-content-center">
+    <!-- <div class="d-flex justify-content-center">
       <div v-if="loading" class="spinner-grow text-primary" role="status">
       </div>
+    </div> -->
+    <div v-if="loading" class="loading-overlay">
+      <div class="spinner-grow text-primary" role="status"></div>
     </div>
   
   <div class="card" v-for="place in results" :key="place.place_id" style="margin-bottom: 6px;">
@@ -264,5 +267,18 @@ button {
 
 .opening-hours-list li:last-child {
   border-bottom: none;
+}
+
+.loading-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.3); /* เทาใส */
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 </style>
