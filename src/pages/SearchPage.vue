@@ -12,7 +12,11 @@ const searched = ref(false)
 const showDetails = ref({})
 
 const search = async () => {
-  if (!keyword.value) return
+  if (!keyword.value || keyword.value.trim() === '') {
+    alert('กรุณากรอกคำค้นหา')
+    return
+  }
+  
   loading.value = true
   results.value = []
   searched.value = false
