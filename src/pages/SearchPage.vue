@@ -4,6 +4,7 @@ import { searchRestaurants } from '../api/restaurant'
 import SearchBar from '../components/SearchBar.vue'
 import RestaurantCard from '../components/RestaurantCard.vue'
 import LoadingOverlay from '../components/LoadingOverlay.vue'
+import { showAlert } from '../utils/alert'
 
 const keyword = ref('')
 const results = ref([])
@@ -13,7 +14,14 @@ const showDetails = ref({})
 
 const search = async () => {
   if (!keyword.value || keyword.value.trim() === '') {
-    alert('กรุณากรอกคำค้นหา')
+    showAlert({
+      icon: 'warning',
+      title: 'คำค้นหาว่างเปล่า',
+      position: 'top-end',
+      timer: 1500,
+      showConfirmButton: false,
+      backdrop: false
+    })
     return
   }
   
@@ -23,9 +31,14 @@ const search = async () => {
 
   try {
     results.value = await searchRestaurants(keyword.value)
+    console.log(results)
     searched.value = true
   } catch (err) {
     console.error('Error:', err)
+    showAlert({
+      icon: 'error',
+      title: 'ไม่สามารถเชื่อมต่อกับเซิร์ฟเวอร์ได้',
+    })
   } finally {
     loading.value = false
   }
